@@ -1,6 +1,7 @@
 package com.crediya.api;
 
 import com.crediya.api.config.RoutesConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -9,6 +10,7 @@ import reactor.core.publisher.Mono;
 import org.springframework.http.HttpMethod;
 
 @Component
+@Slf4j
 public class Handler {
     private final WebClient webClient;
     private final RoutesConfig routesConfig;
@@ -36,6 +38,7 @@ public class Handler {
         String targetUrl = baseUrl + path +
                 (request.uri().getQuery() != null ? "?" + request.uri().getQuery() : "");
 
+        log.info("Redirigiendo petición a: {}", targetUrl);
         return webClient.method(HttpMethod.valueOf(request.methodName()))
                 .uri(targetUrl)
                 .headers(headers -> headers.addAll(request.headers().asHttpHeaders()))
