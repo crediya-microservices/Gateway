@@ -1,0 +1,16 @@
+name: Api-Gateway
+
+services:
+  gateway-app:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile
+    container_name: gateway-app
+    ports:
+      - "8080:8080"
+    networks:
+      - crediya-net
+
+networks:
+  crediya-net:
+    external: true
